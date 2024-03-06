@@ -1,5 +1,0 @@
-# build files
-kattis_rust/target/
-
-# Cargo.lock
-kattis_rust/*.lock

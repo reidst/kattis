@@ -1,0 +1,13 @@
+# C
+## compiled output files
+**/c/.out
+
+# Python 3
+## compiled bytecode
+**/python3/__pycache__/
+
+# Rust
+## build files
+**/rust/target/
+## Cargo.lock
+**/rust/*.lock
