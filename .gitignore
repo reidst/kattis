@@ -4,7 +4,7 @@
 
 # Python 3
 ## compiled bytecode
-**/python3/__pycache__/
+**/__pycache__/
 
 # Rust
 ## build files
