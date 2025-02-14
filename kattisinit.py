@@ -8,10 +8,14 @@ from typing import Callable, Never
 KATTIS_ROOT: Path = None
 
 boilerplates: dict[str, str] = {
-    "python3": "def main():\n"
-               "    pass\n\n\n"
-               "if __name__ == \"__main__\":\n"
-               "    main()\n"
+    "python3":  "# kattis-unsolved\n"
+                "def main():\n"
+                "    pass\n\n\n"
+                "if __name__ == \"__main__\":\n"
+                "    main()\n",
+    "rust": "// kattis-unsolved\n"
+            "fn main() {\n"
+            "}\n"
 }
 
 # Objects of type SetupFunction take a problem name as input, create the
@@ -92,6 +96,8 @@ def setup_rust(problem: str) -> Path:
     except CalledProcessError as cpe:
         eprint(f"Error: failed to run 'cargo init --name {problem} "
                f"{rust_dir}': {cpe}")
+    with rust_main_file.open("wt") as file:
+        file.write(boilerplates["rust"])
     return rust_main_file
 
 
