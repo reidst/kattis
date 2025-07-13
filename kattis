@@ -1,45 +1,49 @@
 #!/usr/bin/env bash
-# usage
-if [ -z $2 ] || [ ! -z $3 ] ; then
+
+# verify arguments
+if [ $# -ne 2 ] ; then
   echo "Usage: kattis [problem] [language]"
   exit 1
 fi
-PROBLEM=$1
-LANGUAGE=$2
-# cd to $KATTISROOT
+problem=$1
+language=$2
+
+# establish KATTISROOT
 if [ -z $KATTISROOT ] ; then
   echo "No default \$KATTISROOT is set on this device."
   echo "Please enter your Kattis home directory: "
   read KATTISROOT
 fi
 if [ ! -d $KATTISROOT ] ; then
-  echo "Your \$KATTISROOT ($KATTISROOT) is not a directory."
+  echo "Invalid Kattis root directory (${KATTISROOT})."
   exit 1
 fi
 cd $KATTISROOT
-# resolve language aliases to a template dir
-if [ ! -d templates/$LANGUAGE ] ; then
-  FOUND=
-  for TEMPLATE in $(ls templates) ; do
-    if [ ! -z $(grep "^$LANGUAGE$" templates/$TEMPLATE/aliases) ] ; then
-      LANGUAGE=$TEMPLATE
-      FOUND=y
+
+# resolve language aliases
+if [ ! -d templates/${language} ] ; then
+  found=""
+  for template in $(ls templates) ; do
+    if [ ! -z $(grep "^${language}$" templates/${template}/aliases) ] ; then
+      language=$template
+      found="y"
       break
     fi
   done
-  if [ -z $FOUND ] ; then
-    echo "Unknown language alias ($LANGUAGE)."
+  if [ -z $found ] ; then
+    echo "Unknown language '${language}'."
     exit 1
   fi
 fi
-if [ -d problems/$PROBLEM/$LANGUAGE ] ; then
-  echo "A $LANGUAGE solution for $PROBLEM already exists."
+if [ -d problems/${problem}/${language} ] ; then
+  echo "A ${language} solution for ${problem} already exists."
   exit 1
 fi
+
 # set up template
-mkdir -p problems/$PROBLEM
-cp -r templates/$LANGUAGE problems/$PROBLEM
-cd problems/$PROBLEM/$LANGUAGE
-./template $PROBLEM
+mkdir -p problems/${problem}
+cp -r templates/${language} problems/${problem}
+cd problems/${problem}/${language}
+./template ${problem}
 rm aliases template
-echo "$LANGUAGE template created at problems/$PROBLEM/$LANGUAGE"
+echo "${language} template created at problems/${problem}/${language}"
