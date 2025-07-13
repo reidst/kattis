@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mv main.py $1.py

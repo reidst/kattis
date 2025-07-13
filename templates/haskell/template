@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mv main.hs $1.hs

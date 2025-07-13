@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# usage
+if [ -z $2 ] || [ ! -z $3 ] ; then
+  echo "Usage: kattis [problem] [language]"
+  exit 1
+fi
+PROBLEM=$1
+LANGUAGE=$2
+# cd to $KATTISROOT
+if [ -z $KATTISROOT ] ; then
+  echo "No default \$KATTISROOT is set on this device."
+  echo "Please enter your Kattis home directory: "
+  read KATTISROOT
+fi
+if [ ! -d $KATTISROOT ] ; then
+  echo "Your \$KATTISROOT ($KATTISROOT) is not a directory."
+  exit 1
+fi
+cd $KATTISROOT
+# resolve language aliases to a template dir
+if [ ! -d templates/$LANGUAGE ] ; then
+  FOUND=
+  for TEMPLATE in $(ls templates) ; do
+    if [ ! -z $(grep "^$LANGUAGE$" templates/$TEMPLATE/aliases) ] ; then
+      LANGUAGE=$TEMPLATE
+      FOUND=y
+      break
+    fi
+  done
+  if [ -z $FOUND ] ; then
+    echo "Unknown language alias ($LANGUAGE)."
+    exit 1
+  fi
+fi
+if [ -d problems/$PROBLEM/$LANGUAGE ] ; then
+  echo "A $LANGUAGE solution for $PROBLEM already exists."
+  exit 1
+fi
+# set up template
+mkdir -p problems/$PROBLEM
+cp -r templates/$LANGUAGE problems/$PROBLEM
+cd problems/$PROBLEM/$LANGUAGE
+./template $PROBLEM
+rm aliases template
+echo "$LANGUAGE template created at problems/$PROBLEM/$LANGUAGE"

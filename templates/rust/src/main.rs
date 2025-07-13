@@ -1,0 +1,3 @@
+// kattis-unsolved
+fn main() {
+}
