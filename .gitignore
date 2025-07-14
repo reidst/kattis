@@ -1,13 +1,12 @@
 # C
-## compiled output files
-**/c/.out
+problems/*/c/.out
+
+# Haskell
+problems/*/haskell/dist-newstyle
 
 # Python 3
-## compiled bytecode
-**/__pycache__/
+problems/*/python3/__pycache__/
 
 # Rust
-## build files
-**/rust/target/
-## Cargo.lock
-**/rust/*.lock
+problems/*/rust/target/
+problems/*/rust/*.lock
