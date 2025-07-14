@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+from http.client import HTTPS_PORT, HTTPSConnection
+from os import mkdir, sep
+from os.path import isfile, isdir
+
+TEST_DIR_NAME = "tests"
+PROBLEM_FILE_NAME = ".kattisproblem"
+
+
+def main():
+    if not isfile(PROBLEM_FILE_NAME):
+        print("Error: not a Kattis problem directory.")
+        exit(1)
+    with open(PROBLEM_FILE_NAME, "rt") as file:
+        problem_name = file.read().strip()
+    if not isdir(TEST_DIR_NAME):
+        mkdir(TEST_DIR_NAME)
+    conn = HTTPSConnection("open.kattis.com", HTTPS_PORT)
+    conn.request("GET", f"/problems/{problem_name}")
+    resp = conn.getresponse()
+    content = resp.read()
+    fields = [s.split(b"</pre>")[0].strip()
+              for s in content.split(b"<pre>")[1:]]
+    for i in range(len(fields) // 2):
+        with open(TEST_DIR_NAME + sep + f"{i}.tst", "wb") as file:
+            file.write(fields[i * 2])
+            file.write(b"\n")
+        with open(TEST_DIR_NAME + sep + f"{i}.out", "wb") as file:
+            file.write(fields[i * 2 + 1])
+            file.write(b"\n")
+
+
+if __name__ == "__main__":
+    main()

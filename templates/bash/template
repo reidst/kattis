@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mv main.sh $1.sh
