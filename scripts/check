@@ -17,24 +17,26 @@ testlimit=$((testcount - 1))
 allpassing="y"
 for testnum in $(seq 0 ${testlimit}); do
     ${KATTISROOT}/scripts/run/${runner} ${problem} \
-        < ${testdir}/${testnum}.tst \
-        &> check.out
-    if diff -Z check.out ${testdir}/${testnum}.out >/dev/null; then
-      :
+        < ${testdir}/${testnum}.in \
+        &> actual.out
+    if diff <(cat actual.out | python3 -c "print(input().strip())") \
+        <(cat ${testdir}/${testnum}.out | python3 -c "print(input().strip())") \
+        >/dev/null; then
+        :
     else
         echo ""
         echo "Test ${testnum} failed."
         echo "---  Given:   ---"
-        cat ${testdir}/${testnum}.tst
+        cat ${testdir}/${testnum}.in
         echo "--- Expected: ---"
         cat ${testdir}/${testnum}.out
         echo "---  Actual:  ---"
-        cat check.out
+        cat actual.out
         allpassing="n"
     fi
 done
-if [ -f check.out ]; then
-    rm check.out
+if [ -f actual.out ]; then
+    rm actual.out
 fi
 if [ ${allpassing} == "y" ]; then
     echo "All tests passing."

@@ -1,4 +1,4 @@
--- kattis-unsubmitted
+-- kattis-accepted
 import Data.List (sort)
 
 main :: IO ()

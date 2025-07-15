@@ -1,11 +1,12 @@
 # C
-problems/*/c/.out
+problems/*/c/*.o
 
 # Haskell
 problems/*/haskell/dist-newstyle
 
 # Python 3
 problems/*/python3/__pycache__/
+venv/
 
 # Rust
 problems/*/rust/target/

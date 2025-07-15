@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-bash $1.sh
+bash -n *.sh && bash ${1}.sh
