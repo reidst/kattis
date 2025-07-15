@@ -1,3 +1,4 @@
+# kattis-accepted
 _ = input()
 nums = list(map(int, input().split()))
 last = nums[0]

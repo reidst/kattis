@@ -1,3 +1,4 @@
+# kattis-accepted
 ops = ('+', '-', '*', '//')
 a, b, c = map(int, input().split())
 

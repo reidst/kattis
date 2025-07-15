@@ -1,3 +1,4 @@
+# kattis-accepted
 from random import shuffle
 def make_guess(max_len, guess):
     print(guess[:max_len], flush=True)

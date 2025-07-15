@@ -1,3 +1,4 @@
+# kattis-partial
 N, M = map(int, input().split())
 c = 0
 for i in range(1, N+1):

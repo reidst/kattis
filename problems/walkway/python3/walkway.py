@@ -1,3 +1,4 @@
+# kattis-accepted
 # Written by Mark Johnson
 
 def dijkstra(G, weight, s):

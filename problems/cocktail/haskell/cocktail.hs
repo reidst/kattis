@@ -1,4 +1,4 @@
--- kattis-unsolved
+-- kattis-unsubmitted
 main :: IO ()
 main = interact solve
 

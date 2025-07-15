@@ -55,5 +55,4 @@ cd problems/${problem}/${language}
 echo ${language} > .kattislanguage
 ./template ${problem}
 rm aliases template run
-ln -s ${KATTISROOT}/scripts/check
 echo "${language} template created at problems/${problem}/${language}"

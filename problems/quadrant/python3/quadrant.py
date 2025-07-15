@@ -1,3 +1,4 @@
+# kattis-accepted
 x = int(input())
 y = int(input())
 if x > 0:

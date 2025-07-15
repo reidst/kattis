@@ -1,4 +1,4 @@
-# kattis-unsolved
+# kattis-unsubmitted
 class UnionFind:
     def __init__(self, n: int):
         self.arr: list[int] = [i for i in range(n)]

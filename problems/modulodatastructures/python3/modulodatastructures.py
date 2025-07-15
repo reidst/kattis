@@ -1,3 +1,4 @@
+# kattis-accepted
 from math import sqrt, ceil
 from sys import stdin
 input = stdin.readline

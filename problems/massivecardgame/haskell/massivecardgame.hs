@@ -1,4 +1,4 @@
--- kattis-unsolved
+-- kattis-unsubmitted
 import Data.List (sort)
 import qualified Data.Map as M
 

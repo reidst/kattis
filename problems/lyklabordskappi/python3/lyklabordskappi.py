@@ -1,4 +1,4 @@
-# kattis-unsolved
+# kattis-unsubmitted
 def main():
     n, l, t = map(int, input().split())
     max_keys = l * t

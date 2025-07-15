@@ -1,3 +1,4 @@
+# kattis-accepted
 from sys import stdin
 from collections import deque
 from heapq import heappush, heappop

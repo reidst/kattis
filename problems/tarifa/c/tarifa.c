@@ -1,3 +1,4 @@
+// kattis-accepted
 #include <stdio.h>
 
 int main() {

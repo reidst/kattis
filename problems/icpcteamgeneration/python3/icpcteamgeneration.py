@@ -1,3 +1,4 @@
+# kattis-accepted
 n = int(input())
 a = []
 b = []

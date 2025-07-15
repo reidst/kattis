@@ -1,3 +1,4 @@
+# kattis-accepted
 def main():
     nums = list(map(int, input().split()))
     nums.sort()

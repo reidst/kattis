@@ -1,4 +1,4 @@
-# kattis-unsolved
+# kattis-unsubmitted
 import math
 
 

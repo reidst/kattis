@@ -1,4 +1,4 @@
-# TODO unsolved
+# kattis-unsubmitted
 def test_case(A, B):
     interval_count = int(input())
     intervals = list()

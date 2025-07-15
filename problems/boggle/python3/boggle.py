@@ -1,5 +1,4 @@
-# kattis-unsolved
-# TODO time limit exceeded (even though it's 11 seconds)
+# kattis-tle
 from dataclasses import dataclass
 from collections import deque
 

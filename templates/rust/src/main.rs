@@ -1,3 +1,3 @@
-// kattis-unsolved
+// kattis-unsubmitted
 fn main() {
 }

@@ -1,4 +1,4 @@
-#kattis-unsolved
+#kattis-accepted
 from collections import deque
 
 

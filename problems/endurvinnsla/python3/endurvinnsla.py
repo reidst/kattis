@@ -1,3 +1,4 @@
+# kattis-accepted
 _ = input()
 P = float(input())
 D = int(input())

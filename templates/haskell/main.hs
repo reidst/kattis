@@ -1,4 +1,4 @@
--- kattis-unsolved
+-- kattis-unsubmitted
 module Main where
 
 main :: IO ()

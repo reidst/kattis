@@ -1,3 +1,4 @@
+# kattis-accepted
 from bisect import bisect_left
 
 A = int(input())

@@ -1,3 +1,4 @@
+# kattis-accepted
 def main():
     print(hex(int(input(), 8))[2:].upper())
 

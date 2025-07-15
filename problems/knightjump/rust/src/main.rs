@@ -1,3 +1,4 @@
+// kattis-accepted
 use std::{
     collections::{HashSet, VecDeque},
     error::Error,

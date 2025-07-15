@@ -1,3 +1,4 @@
+-- kattis-accepted
 import qualified Data.Set as S
 import Data.Maybe (fromMaybe)
 

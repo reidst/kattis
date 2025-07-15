@@ -1,3 +1,4 @@
+# kattis-accepted
 _,*a=map(int,input().split())
 a.sort()
 

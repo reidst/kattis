@@ -1,4 +1,4 @@
-# kattis-unsolved
+# kattis-accepted
 def main():
     circs = []
     rects = []

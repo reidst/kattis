@@ -1,4 +1,4 @@
-# kattis-unsolved
+# kattis-unsubmitted
 def d_sqr(x, y):
     return x*x + y*y
 

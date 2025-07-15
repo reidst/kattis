@@ -1,3 +1,4 @@
+# kattis-accepted
 N, M = map(int, input().split())
 names = input().split()
 cheaters = set()

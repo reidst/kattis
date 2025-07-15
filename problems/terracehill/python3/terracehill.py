@@ -1,3 +1,4 @@
+# kattis-accepted
 input()
 terraces = list(map(int, input().split()))
 

@@ -1,3 +1,4 @@
+# kattis-accepted
 class UnionFind:
     def __init__(self, owes: list[int]):
         self.size: int = len(owes)

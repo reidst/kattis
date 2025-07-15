@@ -1,3 +1,4 @@
+// kattis-accepted
 fn main() {
     let mut line = String::new();
     let stdin = std::io::stdin();

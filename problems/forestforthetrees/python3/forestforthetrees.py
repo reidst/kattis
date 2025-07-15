@@ -1,4 +1,4 @@
-# kattis-unsolved
+# kattis-wa
 from math import ceil, gcd, sqrt
 
 

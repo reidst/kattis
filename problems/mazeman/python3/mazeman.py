@@ -1,3 +1,4 @@
+# kattis-accepted
 height, width = map(int, input().split())
 dots = set()
 letters = set()

@@ -1,3 +1,4 @@
+# kattis-accepted
 m, n = map(int, input().split())
 input()
 banks = [0 for _ in range(m)]

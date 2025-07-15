@@ -1,3 +1,4 @@
+// kattis-accepted
 fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let stdin = std::io::stdin();
     let mut u = String::with_capacity(10_000);

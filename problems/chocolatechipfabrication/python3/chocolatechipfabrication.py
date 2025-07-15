@@ -1,3 +1,4 @@
+# kattis-accepted
 from collections import deque
 
 def iter_neighbors(loc):

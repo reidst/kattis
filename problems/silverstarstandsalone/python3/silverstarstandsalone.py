@@ -1,3 +1,4 @@
+# kattis-accepted
 distance = int(input())
 
 def isprime(n):

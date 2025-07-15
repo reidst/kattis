@@ -1,3 +1,4 @@
+# kattis-accepted
 from collections import deque
 
 rs,cs, n = map(int,input().split())
@@ -36,6 +37,6 @@ dest = (rs-1,cs-1)
 if dest in levels:
     print(levels[dest])
 else:
-    print("March he 30th be with you!")
+    print("March the 30th be with you!")
 
                 

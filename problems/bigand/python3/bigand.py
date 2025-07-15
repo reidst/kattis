@@ -1,4 +1,4 @@
-# kattis-unsolved
+# kattis-unsubmitted
 def main():
     pass	
 

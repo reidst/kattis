@@ -1,3 +1,4 @@
+# kattis-accepted
 from collections import deque
 
 cases = int(input())

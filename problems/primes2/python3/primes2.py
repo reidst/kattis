@@ -1,3 +1,4 @@
+# kattis-accepted
 import math
 
 

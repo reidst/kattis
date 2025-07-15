@@ -1,3 +1,4 @@
+# kattis-accepted
 lines = []
 while (line:=input()) != '-1':
     lines.append(line.split())

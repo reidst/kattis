@@ -17,10 +17,11 @@ allpassing="y"
 for testnum in $(seq 0 ${testlimit}); do
     ${KATTISROOT}/templates/${language}/run ${problem} \
         < ${testdir}/${testnum}.tst \
-        > check.out
+        &> check.out
     if diff check.out ${testdir}/${testnum}.out >/dev/null; then
       :
     else
+        echo ""
         echo "Test ${testnum} failed."
         echo "--- Expected: ---"
         cat ${testdir}/${testnum}.out
@@ -29,7 +30,9 @@ for testnum in $(seq 0 ${testlimit}); do
         allpassing="n"
     fi
 done
-rm check.out
+if [ -f check.out ]; then
+    rm check.out
+fi
 if [ $allpassing = "y" ]; then
     echo "All tests passing."
 fi

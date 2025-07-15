@@ -1,3 +1,4 @@
+# kattis-partial
 def main():
     n = int(input())
     larger = int(str(n)[:-2] + '99')

@@ -1,3 +1,4 @@
+# kattis-accepted
 from random import shuffle as s
 n=int(input())
 *l,='PIZA'

@@ -1,3 +1,4 @@
+# kattis-accepted
 letters = input()
 nums = input()
 

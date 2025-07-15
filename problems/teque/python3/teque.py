@@ -1,3 +1,4 @@
+# kattis-accepted
 from collections import deque
 from sys import stdin
 lines = stdin.readlines()

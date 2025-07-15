@@ -1,3 +1,4 @@
+# kattis-unsubmitted
 N = int(input())
 p = 0
 g = 0

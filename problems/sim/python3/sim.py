@@ -1,4 +1,4 @@
-# kattis-unsolved
+# kattis-unsubmitted
 class DLLNode:
     def __init__(self, left, right, data):
         self.left = left

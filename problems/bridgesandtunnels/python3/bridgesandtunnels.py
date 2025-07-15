@@ -1,3 +1,4 @@
+# kattis-accepted
 buildings = dict()
 N = int(input())
 rank = [0 for i in range(2*N)]

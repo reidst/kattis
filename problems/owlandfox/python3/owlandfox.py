@@ -1,4 +1,4 @@
-# kattis-unsolved
+# kattis-accepted
 def main():
     for _ in range(int(input())):
         x = int(input())

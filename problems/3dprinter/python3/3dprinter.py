@@ -1,3 +1,4 @@
+# kattis-accepted
 import math
 n = int(input())
 print(n if n < 4 else int(math.log(n - 1, 2)) + 2)

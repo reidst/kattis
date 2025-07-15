@@ -1,3 +1,4 @@
+# kattis-accepted
 input()
 s = list(input())
 delimiters = {')': '(', ']': '[', '}': '{'}

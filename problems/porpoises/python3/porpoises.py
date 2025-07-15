@@ -1,3 +1,4 @@
+# kattis-accepted
 def matrix_mul(mat_a, mat_b, modulus):
     a, b, c, d = mat_a
     e, f, g, h = mat_b

@@ -1,3 +1,4 @@
+# kattis-accepted
 board = [list(map(int, input().split())) for _ in range(4)]
 direction = int(input())
 

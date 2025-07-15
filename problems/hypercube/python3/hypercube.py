@@ -1,3 +1,4 @@
+# kattis-accepted
 D, a, b = input().split()
 D = int(D)
 

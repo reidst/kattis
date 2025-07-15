@@ -1,3 +1,4 @@
+# kattis-accepted
 from itertools import permutations
 
 def isprime(n):

@@ -1,3 +1,4 @@
+# kattis-accepted
 N, Q = map(int, input().split())
 loc = [0] + list(map(int, input().split()))
 for _ in range(Q):

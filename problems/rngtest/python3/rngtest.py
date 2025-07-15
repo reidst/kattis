@@ -1,3 +1,4 @@
+# kattis-accepted
 def mat_mul(a, b, m):
     return [ [ (a[0][0] * b[0][0] + a[0][1] * b[1][0]) % m
              , (a[0][0] * b[0][1] + a[0][1] * b[1][1]) % m ]
