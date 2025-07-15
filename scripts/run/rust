@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-cargo run $1
+cargo run -q

@@ -4,19 +4,21 @@ from os import mkdir, sep
 from os.path import isfile, isdir
 
 TEST_DIR_NAME = "tests"
-PROBLEM_FILE_NAME = ".kattisproblem"
+PAGE_FILE_NAME = ".kattispage"
 
 
 def main():
-    if not isfile(PROBLEM_FILE_NAME):
+    if not isfile(PAGE_FILE_NAME):
         print("Error: not a Kattis problem directory.")
         exit(1)
-    with open(PROBLEM_FILE_NAME, "rt") as file:
-        problem_name = file.read().strip()
+    with open(PAGE_FILE_NAME, "rt") as file:
+        page_name = file.read().strip().replace("https://", "")
     if not isdir(TEST_DIR_NAME):
         mkdir(TEST_DIR_NAME)
-    conn = HTTPSConnection("open.kattis.com", HTTPS_PORT)
-    conn.request("GET", f"/problems/{problem_name}")
+    domain_name = page_name.split("/")[0]
+    path_name = page_name[len(domain_name):]
+    conn = HTTPSConnection(domain_name, HTTPS_PORT)
+    conn.request("GET", path_name)
     resp = conn.getresponse()
     content = resp.read()
     fields = [s.split(b"</pre>")[0].strip()

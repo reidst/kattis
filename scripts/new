@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
 # verify arguments
-if [ $# -ne 2 ]; then
-    echo "Usage: kattis [problem] [language]"
+if [ ${#} -ne 2 ]; then
+    echo "Usage: kattis [problem URL] [template]"
     exit 1
 fi
-problem=$1
-language=$2
+if python3 -c "exit('kattis.com' in '${1}')"; then
+    echo "Error: not a Kattis URL."
+    exit 1
+fi
 
 # establish KATTISROOT
 if [ -z ${KATTISROOT} ]; then
@@ -20,39 +22,44 @@ if [ ! -d ${KATTISROOT} ]; then
 fi
 cd ${KATTISROOT}
 
+# initialize variables
+url=${1}
+template=${2}
+solution=${template}
+problem=$(python3 -c "print('${url}'.split('?')[0].split('/')[-1])")
+
 # initialize problem directory
 if [ ! -d problems/${problem} ]; then
     mkdir -p problems/${problem}
     cd problems/${problem}
-    echo ${problem} > .kattisproblem
+    echo ${url} > .kattispage
     ${KATTISROOT}/scripts/download_tests
     cd ${KATTISROOT}
 fi
 
-# resolve language aliases
-if [ ! -d templates/${language} ]; then
+# resolve template aliases
+if [ ! -d templates/${template} ]; then
     found="n"
-    for template in $(ls templates); do
-        if [ ! -z $(grep "^${language}$" templates/${template}/aliases) ]; then
-            language=$template
+    for template_dir in $(ls templates); do
+        if [ ! -z $(grep "^${language}$" templates/${template_dir}/aliases) ]; then
+            template=${template_dir}
             found="y"
             break
         fi
     done
-    if [ $found = "n" ]; then
-        echo "Error: unknown language '${language}'."
+    if [ ${found} == "n" ]; then
+        echo "Error: unknown template '${template}'."
         exit 1
     fi
 fi
-if [ -d problems/${problem}/${language} ]; then
-    echo "Error: a ${language} solution for ${problem} already exists."
+if [ -d problems/${problem}/${solution} ]; then
+    echo "Error: a solution for ${problem} named '${solution}' already exists."
     exit 1
 fi
 
 # copy template and initialize solution directory
-cp -r templates/${language} problems/${problem}
-cd problems/${problem}/${language}
-echo ${language} > .kattislanguage
+cp -r templates/${template} problems/${problem}/${solution}
+cd problems/${problem}/${solution}
 ./template ${problem}
-rm aliases template run
-echo "${language} template created at problems/${problem}/${language}"
+rm aliases template
+echo "${template} template created at problems/${problem}/${solution}"
