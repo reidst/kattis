@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+for arg in "$@"; do
+    if [ $arg == "-s" ]; then
+        strict=1
+    fi
+done
 if [ ! -f ../.kattispage ] || [ ! -f .kattisrunner ]; then
     echo "Error: not a Kattis solution directory."
     exit 1
@@ -14,32 +19,39 @@ testdir=../tests
 testcount=$(( $(ls -1 ${testdir} | wc -l) / 2 ))
 echo "Checking ${problem}/${solution} against ${testcount} test sample(s)..."
 testlimit=$((testcount - 1))
-allpassing="y"
 for testnum in $(seq 0 ${testlimit}); do
     ${KATTISROOT}/scripts/run/${runner} ${problem} \
         < ${testdir}/${testnum}.in \
-        &> actual.out
-    if diff <(cat actual.out | python3 -c "print(input().strip())") \
-        <(cat ${testdir}/${testnum}.out | python3 -c "print(input().strip())") \
-        >/dev/null; then
-        :
+        > actual
+    if [ -n "${strict}" ]; then
+        diff actual ${testdir}/${testnum}.out &>/dev/null
+        result=$?
     else
-        echo ""
-        echo "Test ${testnum} failed."
-        echo "---  Given:   ---"
-        cat ${testdir}/${testnum}.in
-        echo "--- Expected: ---"
-        cat ${testdir}/${testnum}.out
-        echo "---  Actual:  ---"
-        cat actual.out
-        allpassing="n"
+        expected=${testdir}/${testnum}.out
+        diff -b \
+            <(head -n -1 actual; tail -1 actual | grep -v '^$' | sed -e '$a\') \
+            <(head -n -1 $expected; tail -1 $expected | grep -v '^$' | sed -e '$a\') \
+            &>/dev/null
+        result=$?
     fi
+    if [ ${result} -eq 0 ]; then continue; fi
+    echo ""
+    echo "Test ${testnum} failed."
+    echo "---  Given:   ---"
+    cat ${testdir}/${testnum}.in
+    echo "--- Expected: ---"
+    cat ${testdir}/${testnum}.out
+    echo "---  Actual:  ---"
+    cat actual
+    failed=1
 done
-if [ -f actual.out ]; then
-    rm actual.out
+if [ -f actual ]; then
+    rm actual
 fi
-if [ ${allpassing} == "y" ]; then
-    echo "All tests passing."
-else
+if [ -n "${failed}" ]; then
     exit 1
+fi
+echo "All tests passing."
+if [ ! -n "${strict}" ]; then
+    echo "To re-test using strict whitespace comparisons, use the -s flag."
 fi
