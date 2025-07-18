@@ -26,7 +26,7 @@ printhelp() {
     echo "  5) Invalid Kattis root directory (\$KATTISROOT)"
     echo "  6) Failed to download tests"
     echo "  7) Unknown template name"
-    echo "  8) Solution name already exists"
+    echo "  8) Invalid solution name"
 }
 
 # process arguments
@@ -131,8 +131,14 @@ fi
 if [ -z "${solution}" ]; then
     solution=${template}
 fi
-if [ -d problems/${problem}/${solution} ]; then
-    echo "$(basename $0): a solution for ${problem} named '${solution}' already exists."
+if [ -e problems/${problem}/${solution} ]; then
+    if [ ${solution} == "tests" -o ${solution} == ".kattispage" ]; then
+        echo -n "$(basename $0): '${solution}' is a reserved name "
+        echo "and cannot be the name of a solution."
+    else
+        echo -n "$(basename $0): a solution for ${problem} named "
+        echo "'${solution}' already exists."
+    fi
     exit 8
 fi
 
