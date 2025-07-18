@@ -1,13 +1,73 @@
 #!/usr/bin/env bash
 
-# verify arguments
-if [ ${#} -ne 2 ]; then
-    echo "Usage: kattis [problem URL] [template]"
-    exit 1
-fi
-if python3 -c "exit('kattis.com' in '${1}')"; then
-    echo "Error: not a Kattis URL."
-    exit 1
+# prints the usage message
+printusage() {
+    echo "Usage: $(basename ${0}) [options] url [template [name]]"
+}
+
+# prints the help message
+printhelp() {
+    printusage
+    echo "Options:"
+    echo "  -h, --help  Prints this help message."
+    echo "Arguments:"
+    echo "  url       A valid kattis URL (follows the regular expression"
+    echo "            '^https://\w+.kattis.com(/contests/\w+)?/problems/\w+\??')."
+    echo "  template  A template name or alias (from templates/). Defaults to"
+    echo "            the contents of templates/.favorite."
+    echo "  name      A name for the solution directory. Defaults to the name"
+    echo "            of the template."
+    echo "Exit codes:"
+    echo "  0) Success"
+    echo "  1) Unknown command-line option"
+    echo "  2) Too many positional arguments"
+    echo "  3) Invalid Kattis URL"
+    echo "  4) No positional arguments"
+    echo "  5) Invalid Kattis root directory (\$KATTISROOT)"
+    echo "  6) Failed to download tests"
+    echo "  7) Unknown template name"
+    echo "  8) Solution name already exists"
+}
+
+# process arguments
+for arg in "$@"; do
+    if [ -z "${optsdone}" ]; then
+        re='^-'
+        if [[ "${arg}" =~ ${re} ]]; then
+            if [ "${arg}" == "--help" -o "${arg}" == "-h" ]; then
+                printhelp
+                exit 0
+            fi
+            echo "$(basename $0): unknown option: ${arg}"
+            exit 1
+        else
+            optsdone=1
+        fi
+    fi
+    if [ -n "${solution}" ]; then
+        echo "$(basename $0): too many positional arguments."
+        exit 2
+    fi
+    if [ -n "${template}" ]; then
+        solution="${arg}"
+        continue
+    fi
+    if [ -n "${url}" ]; then
+        template="${arg}"
+        continue
+    fi
+    re='^https://\w+.kattis.com(/contests/\w+)?/problems/\w+\??'
+    if [[ "${arg}" =~ ${re} ]]; then
+        url="${arg}"
+        problem=$(echo ${url} | cut -d'?' -f 1 | rev | cut -d'/' -f 1 | rev)
+    elif [ -n "${optsdone}" ]; then
+        echo "$(basename $0): not a valid Kattis URL."
+        exit 3
+    fi
+done
+if [ -z "${url}" ]; then
+    echo "$(basename $0): No Kattis URL given."
+    exit 4
 fi
 
 # establish KATTISROOT
@@ -17,9 +77,10 @@ if [ -z ${KATTISROOT} ]; then
     read KATTISROOT
 fi
 if [ ! -d ${KATTISROOT} ]; then
-    echo "Error: invalid Kattis root directory (${KATTISROOT})."
-    exit 1
+    echo "$(basename $0): invalid Kattis root directory (${KATTISROOT})."
+    exit 5
 fi
+export KATTISROOT
 cd ${KATTISROOT}
 
 # initialize python3 venv
@@ -28,14 +89,7 @@ if [ ! -d scripts/venv ]; then
     source scripts/venv/bin/activate
     pip install -r scripts/requirements.txt
     deactivate
-    rm scripts/requirements.txt
 fi
-
-# initialize variables
-url=${1}
-template=${2}
-solution=${template}
-problem=$(python3 -c "print('${url}'.split('?')[0].split('/')[-1])")
 
 # initialize problem directory
 if [ ! -d problems/${problem} ]; then
@@ -43,29 +97,43 @@ if [ ! -d problems/${problem} ]; then
     cd problems/${problem}
     echo ${url} > .kattispage
     source ${KATTISROOT}/scripts/venv/bin/activate
-    ${KATTISROOT}/scripts/download_tests
+    ${KATTISROOT}/scripts/download
+    result=$?
     deactivate
     cd ${KATTISROOT}
+    if [ ${result} -ne 0 ]; then
+        rm -r problems/${problem}
+        exit 6
+    fi
+fi
+
+# use favorite template if none is set
+if [ -z "${template}" ]; then
+    template=$(head -n 1 ${KATTISROOT}/templates/.favorite)
 fi
 
 # resolve template aliases
 if [ ! -d templates/${template} ]; then
-    found="n"
     for template_dir in $(ls templates); do
-        if [ ! -z $(grep "^${language}$" templates/${template_dir}/aliases) ]; then
+        if grep -q "^${template}\$" templates/${template_dir}/aliases; then
             template=${template_dir}
-            found="y"
+            found=1
             break
         fi
     done
-    if [ ${found} == "n" ]; then
-        echo "Error: unknown template '${template}'."
-        exit 1
+    if [ -z "${found}" ]; then
+        echo "$(basename $0): unknown template '${template}'."
+        exit 7
     fi
 fi
+
+# set solution name if none is set
+if [ -z "${solution}" ]; then
+    solution=${template}
+fi
 if [ -d problems/${problem}/${solution} ]; then
-    echo "Error: a solution for ${problem} named '${solution}' already exists."
-    exit 1
+    echo "$(basename $0): a solution for ${problem} named '${solution}' already exists."
+    exit 8
 fi
 
 # copy template and initialize solution directory
